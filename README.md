@@ -4,12 +4,11 @@ This workshop is a step-by-step guide for exploring how adopting DevOps can auto
 This workshop demonstrates how to:
 1. [Use Bicep to create a web app in the Azure](#Create-App-Service-app-using-Bicep)
 2. [Configure GitHub actions to deploy Azure App Service using Infrastructure as code](#A-tour-of-app-service-features)
-3. [Create a sample app code on your machine (in Node.js)](#Creating-and-building-the-demo-app)
+3. [Create a sample app code (in Python)](#Creating-and-building-the-demo-app)
 4. [Deploy to your web app on Azure](#Deploy-the-Express-application-to-an-Azure-Web-App)
 5. [Validate it is working and inspect the deployed web app](#Check-that-your-application-has-deployed-correctly)
-6. [Demonstrate how to use deployment slots for blue/green deployments](#Blue/Green-Deployments-using-Deployment-Slots)
-7. [How to inject variables or secrets into your web app](#Injecting-variables-and-secrets-into-a-web-app)
-8. [How to use key vault to store a secret that the web app then uses](#Using-Azure-Key-Vault-to-hold-secrets)
+6. [How to inject variables or secrets into your web app](#Injecting-variables-and-secrets-into-a-web-app)
+7. [How to use key vault to store a secret that the web app then uses](#Using-Azure-Key-Vault-to-hold-secrets)
 
 ## Prerequisites
 1. Access to an Azure subscription or resource group with contributor rights. Will be provided by your coach.
@@ -69,3 +68,11 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
   }
 }
 ```
+
+The code above declares two resources:
+1. An App Service plan to define a set of compute resources for a web app to run. This is identified by the 'resource appServicePlan' block.
+2. An App Service which is a HTTP-based service for hosting web applications, REST APIs, and mobile back ends. This is where code will be deployed and can be identified by the 'resource appService' block.
+
+What other properties of the bicep code can you recognise?
+
+When ready commit the new file to main, adding a comment to describe your changes.
