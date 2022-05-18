@@ -13,6 +13,7 @@ This workshop demonstrates how to:
 
 ## Prerequisites
 1. Access to an Azure subscription or resource group with contributor rights. Will be provided by your coach.
+2. Clone of this repository
 2. Visual Studio Code with the *Azure Tools* extension installed (this extension is published by Microsoft)
 
 If you're in a hurry the completed resources for this lab can be found in the 'completed' folder within this repo.
@@ -23,4 +24,48 @@ Bicep is a domain-specific language (DSL) that uses declarative syntax to deploy
 Copy template snippets bit by bit to guide user through each section.
 
 ### Task 1
-First we need to create the bicep file that will define our infrastructure. Go ahead and create a file called 'main.bicep' in a new folder called 'bicep' 
+First we need to create the bicep file that will define our infrastructure.
+
+Above the list of files, using the Add file drop-down, click Create new file.
+
+![alt text](/images/create_new_file.png "Create new file")
+
+In the file name field, type the name and extension for the file, in this case 'bicep/main.bicep'.
+
+![alt text](/images/bicep_path.png "file Path")
+
+Leaving the window open copy the following bicep code into the body of the file.
+
+```
+param webAppName string = uniqueString(resourceGroup().id) // Generate unique String for web app name
+param sku string = 'S1' // The SKU of App Service Plan
+param linuxFxVersion string = 'PYTHON|3.9' // The runtime stack of web app
+param location string = resourceGroup().location // Location for all resources
+
+var appServicePlanName = toLower('AppServicePlan-${webAppName}')
+var webSiteName = toLower('wapp-${webAppName}')
+
+resource appServicePlan 'Microsoft.Web/serverfarms@2020-06-01' = {
+  name: appServicePlanName
+  location: location
+  sku: {
+    name: sku
+  }
+  kind: 'linux'
+  properties: {
+    reserved: true
+  }
+}
+
+resource appService 'Microsoft.Web/sites@2020-06-01' = {
+  name: webSiteName
+  location: location
+  kind: 'app'
+  properties: {
+    serverFarmId: appServicePlan.id
+    siteConfig: {
+      linuxFxVersion: linuxFxVersion
+    }
+  }
+}
+```
