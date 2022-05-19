@@ -26,7 +26,7 @@ Bicep is a domain-specific language (DSL) that uses declarative syntax to deploy
 ### Task 1 - Create the Bicep file
 First we need to create the bicep file that will define our infrastructure.
 
-Above the list of files, using the Add file drop-down, click Create new file.
+Above the list of files on this page, use the Add file drop-down and click Create new file.
 
 ![alt text](/images/create_new_file.png "Create new file")
 
@@ -34,8 +34,10 @@ In the file name field, type the name and extension for the file, in this case '
 
 ![alt text](/images/bicep_path.png "file Path")
 
+Leave the page open ready for the next task.
+
 ### Task 2 - Define the infrastructure using Bicep
-Leaving the window open copy the following bicep code into the body of the file.
+Copy the following bicep code into the body of the 'main.bicep' file.
 
 ```
 param webAppName string = uniqueString(resourceGroup().id) // Generate unique String for web app name
@@ -80,28 +82,15 @@ The code above declares two resources:
 
 You'll notice that parameters are used to define some properties, some of which are generated from the resource group values.
 
-Can you identify where the runtime stack could be changed?
+Question: Can you identify where the runtime stack could be changed?
 
 ### Task 3 - Commit the Bicep file
 When ready commit the new file to main, adding a comment to describe your changes.
 
 ## Deploy the infrastructure using GitHub Actions
-In this section we will use GitHub Actions and the bicep code to automate the deployment of the Azure infrastructure we need to run our python application.
+In this section we will use GitHub Actions to automate the deployment of the Azure infrastructure defined in the previous section.
 
-GitHub actions use a workflow file which is defined in YAML (.yml) and stored within the /.github/workflows/ path in your repository. This definition contains the various steps and parameters that make up the workflow.
-
-The file has three sections:
-
-Authentication
-1. Define a service principal or publish profile.
-2. Create a GitHub secret.
-
-Build
-1. Set up the environment.
-2. Build the web app.
-
-Deploy
-1. Deploy the web app.
+GitHub actions uses a definition file containing the various steps and parameters needed to automate your workflow.
 
 ### Task 1 - Generate credentials
 First step is to generate credentials to allow GitHub actions  access to your Azure Subscription. In this lab your coach will provide a service principal with the required access. In the real world access may have to be requested via the security or platform team.
@@ -172,9 +161,9 @@ To finalise your changes complete the following:
 Note: Updating either the workflow file or Bicep file triggers the workflow. The workflow starts right after you commit the changes.
 
 ## Check workflow and deployment status
-By viewing the status of our workflow we can identify success or failure and debug any issues should they occur.
+By viewing the status of our workflow you can identify success or failure and debug any issues should they occur.
 
-To do this select the Actions tab in your repository. 
+To do this select the 'Actions' tab in your repository. 
 
 ![alt text](/images/actions-tab.png "Actions Tab")
 
