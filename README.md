@@ -204,6 +204,6 @@ If all the steps have been completed correctly, you'll notice a default landing 
 You have successfully deployed App Service using GitHub Actions!
 
 ## Deploy application code to Azure
-Now our infrastructure is in place we can proceed to deploy our application code. In this lab we will use a sample python web app, but in a microservices architecture, this could be one of many APIs.
+Now our infrastructure is in place we can proceed to deploy our application code. In this lab we will use a simple python web app that returns the message "Hello World". In a microservices architecture, this could be one of many APIs interconnecting to form an application.
 
-### Task 1 - Modify the workflow 
+### Task 1 - Expand workflow

@@ -40,7 +40,7 @@ jobs:
     - run: echo ${{ steps.deploy.outputs.hostName }}
 
       # Deploy Web App
-    - name: Deploy web App using GH Action azure/webapps-deploy
+    - name: Deploy web app using GH action azure/webapps-deploy
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ steps.deploy.outputs.hostName }}
