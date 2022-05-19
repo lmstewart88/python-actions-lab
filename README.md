@@ -1,5 +1,5 @@
-# Python Web App DevOps Lab
-This workshop is a step-by-step guide for exploring how adopting GithHub Actions can automate the deployment of a Python web app to Azure.
+# Python Web App and GitHub Actions Lab
+This workshop is a step-by-step beginners guide for exploring how adopting GithHub Actions can automate the deployment of a Python web app to Azure.
 
 This workshop demonstrates how to:
 1. [Use Bicep to create a web app in the Azure](#use-bicep-to-create-a-web-app-in-the-azure)
