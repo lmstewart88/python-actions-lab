@@ -294,7 +294,7 @@ Just as we did in the 'Check Workflow and Web App Status' section, you should no
 
 Once the run has completed and has a green tick, browse to your web app URL (Remember the one you constructed earlier?). You should be greeted by the page shown below:
 
-![alt text](/images/hell_page.png "Jobs")
+![alt text](/images/hello_page.png "Jobs")
 
 If you see the page above you have successfully deployed your Python web application to Azure!
 
