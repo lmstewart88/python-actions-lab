@@ -104,12 +104,12 @@ Deploy
 1. Deploy the web app.
 
 ### Task 1 - Generate credentials
-First step is to generate credentials to allow GitHub actions  access to your Azure Subsription. In this lab your coach will provide a service principal with the required access. In the real world access may have to be requested via the security or platform team.
+First step is to generate credentials to allow GitHub actions  access to your Azure Subscription. In this lab your coach will provide a service principal with the required access. In the real world access may have to be requested via the security or platform team.
 
 Please now ensure you have the service principal details from your coach. You will need these for the following tasks.
 
 ### Task 2 - Add secrets to GitHub
-In GitHub, browse your repository, select Settings > Secrets > Actions > New respository secret.
+In GitHub, browse your repository, select Settings > Secrets > Actions > New repository secret.
 
 Paste the entire JSON output from the Azure CLI command (provided by your coach) into the secret's value field. Give the secret the name AZURE_CREDENTIALS.
 
@@ -226,7 +226,7 @@ Second is to deploy the code to the app service we deployed earlier. For this we
         app-name: ${{ steps.deploy.outputs.hostName }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
-We fetch the app service name from the deploy Bicep job output (the same output we used to contruct our URL) and then set the package path using an environment variable.
+We fetch the app service name from the deploy Bicep job output (the same output we used to construct our URL) and then set the package path using an environment variable.
 
 ### Task 1 - Expand workflow
 In GitHub browse to '.github/workflows' and open 'main.yml'. Replace all the code with the contents below.
