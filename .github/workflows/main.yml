@@ -19,6 +19,7 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     
+      # Build the Python app
     - name: Set up Python 3.x
       uses: actions/setup-python@v2
       with:

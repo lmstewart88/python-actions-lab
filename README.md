@@ -1,24 +1,22 @@
 # Python Web App DevOps Lab
-This workshop is a step-by-step guide for exploring how adopting DevOps can automate the deployment of a Python Web App to Azure.
+This workshop is a step-by-step guide for exploring how adopting GithHub Actions can automate the deployment of a Python web app to Azure.
 
 This workshop demonstrates how to:
 1. [Use Bicep to create a web app in the Azure](#use-bicep-to-create-a-web-app-in-the-azure)
-2. [Deploy to App Service using GitHub Actions](#deploy-app-service-using-github-actions)
-3. [Deploy application code to Azure](#deploy-application-code-to-azure)
-5. [Validate it is working and inspect the deployed web app](#Check-that-your-application-has-deployed-correctly)
-6. [How to inject variables or secrets into your web app](#Injecting-variables-and-secrets-into-a-web-app)
-7. [How to use key vault to store a secret that the web app then uses](#Using-Azure-Key-Vault-to-hold-secrets)
+2. [Deploy App Service using GitHub Actions](#deploy-app-service-using-github-actions)
+3. [Check Workflow and Web App Status](#check-workflow-and-web-app-status)
+4. [Deploy a Python App to Azure](#deploy-python-app-to-azure)
+5. [Check that your application has deployed correctly](#check-that-your-application-has-deployed-correctly)
 
 ## Prerequisites
-1. Access to an Azure subscription or resource group with contributor rights. Will be provided by your coach.
-2. Clone of this repository
-2. Visual Studio Code with the *Azure Tools* extension installed (this extension is published by Microsoft)
+1. Service principal granting contributor access to an Azure subscription or resource group. This will be provided by your coach.
 
-If you're in a hurry the completed resources for this lab can be found in the 'completed' folder within this repo.
+2. A fork of this repository - Use the fork button located in the top right of this page. Ensure the owner is set to your GitHub username, the repository name can be left as is. 
+
+![alt text](/images/fork_button.jpg "Fork Button")
 
 ## Use Bicep to create a web app in the Azure
 Bicep is a domain-specific language (DSL) that uses declarative syntax to deploy Azure resources. It provides concise syntax, reliable type safety, and support for code reuse. You can use Bicep instead of JSON to develop your Azure Resource Manager templates (ARM templates). Bicep syntax reduces that complexity and improves the development experience.
-
 
 ### Task 1 - Create the Bicep file
 First we need to create the bicep file that will define our infrastructure.
@@ -82,7 +80,7 @@ Can you identify where the runtime stack could be changed?
 ### Task 3 - Commit the Bicep file
 When ready commit the new file to main, adding a comment to describe your changes.
 
-## Deploy App Service using GitHub Actions
+## Deploy Azure App Service using GitHub Actions
 In this section we will use GitHub Actions and the bicep code to automate the deployment of the Azure infrastructure we need to run our python application.
 
 GitHub actions use a workflow file which is defined in YAML (.yml) and stored within the /.github/workflows/ path in your repository. This definition contains the various steps and parameters that make up the workflow.
@@ -168,7 +166,7 @@ To finalise your changes complete the following:
 
 Note: Updating either the workflow file or Bicep file triggers the workflow. The workflow starts right after you commit the changes.
 
-### Task 4 - Check workflow and web app status
+## Check workflow and web app status
 By viewing the status of our workflow we can identify success or failure and debug any issues should they occur.
 
 To do this select the Actions tab in your repository. 
@@ -195,15 +193,103 @@ For example, in the screenshot above the value is wapp-vuqhwdvcgkkk2, which mean
 
 https://wapp-vuqhwdvcgkkk2.azurewebsites.net
 
-Copy and paste your completed URL to your browser to view your web app. 
+Copy and paste your completed URL into your browser to view your web app. Ensure you also save the URL somewhere, as you will need it later.
 
 If all the steps have been completed correctly, you'll notice a default landing page confirming the app is up and running but missing your content.
 
 ![alt text](/images/default_landing_page.png "Jobs")
 
-You have successfully deployed App Service using GitHub Actions!
+You have successfully deployed app service using GitHub Actions!
 
-## Deploy application code to Azure
-Now our infrastructure is in place we can proceed to deploy our application code. In this lab we will use a simple python web app that returns the message "Hello World". In a microservices architecture, this could be one of many APIs interconnecting to form an application.
+## Deploy Python app to Azure
+Now our infrastructure is in place we can proceed to deploy our application code. In this lab we will use a simple python web app for demonstration purposes. However, in a microservices architecture, this could be one of many APIs interconnecting to form an application.
+
+To deploy our Python application we need to add a couple of additional steps to the workflow.
+
+The first is to build the web app. The process of building a web app and deploying to Azure App Service changes depending on the language. In Python, the file 'Requirements.txt' is used to declare the required packages needed for the app to run successfully, we then use a job within our workflow to install these packages. This is shown below:
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r ./app/requirements.txt
+
+Second is to deploy the code to the app service we deployed earlier. For this we need the name of the app service and the path to the Python application project.
+
+    - name: Deploy web app using GH action azure/webapps-deploy
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ steps.deploy.outputs.hostName }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+We fetch the app service name from the deploy Bicep job output (the same output we used to contruct our URL) and then set the package path using an environment variable.
 
 ### Task 1 - Expand workflow
+In GitHub browse to '.github/workflows' and open 'main.yml'. Replace all the code with the contents below.
+
+```
+name: Python application
+
+on:
+  [push]
+
+env:
+  AZURE_WEBAPP_PACKAGE_PATH: './app' # set this to the path to your web app project, defaults to the repository root
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Checkout code
+    - uses: actions/checkout@v2
+    
+      # Log into Azure
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+      # Build the Python app
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r ./app/requirements.txt
+
+      # Deploy Bicep file
+    - name: Deploy Bicep
+      uses: azure/arm-deploy@v1
+      id: deploy
+      with:
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        template: ./bicep/main.bicep
+        failOnStdErr: false
+    - run: echo ${{ steps.deploy.outputs.hostName }}
+
+      # Deploy Web App
+    - name: Deploy web app using GH action azure/webapps-deploy
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ steps.deploy.outputs.hostName }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+    - name: logout
+      run: |
+        az logout
+```
+Question: Where would you enter the path to the application should it change?
+
+When you're ready commit your changes just as before. This will trigger a new run where your Python app will be deployed.
+
+## Check that your application has deployed correctly
+
+Just as we did in the 'Check Workflow and Web App Status' section, you should now check the status of your run and review any errors. Feel free to do that now and see if you can also identify the extra jobs we added.
+
+Once the run has completed and has a green tick, browse to your web app URL (Remember the one you constructed earlier?). You should be greeted by the page shown below:
+
+![alt text](/images/hell_page.png "Jobs")
+
+If you see the page above you have successfully deployed your Python web application to Azure!
+
