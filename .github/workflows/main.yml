@@ -21,3 +21,4 @@ jobs:
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./bicep/main.bicep
         failOnStdErr: false
+    - run: echo ${{ steps.deploy.outputs.hostName }}
