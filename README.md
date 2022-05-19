@@ -285,5 +285,13 @@ Once the run has completed and has a green tick, browse to your web app URL (Rem
 
 ![alt text](/images/hello_page.png "Jobs")
 
-If you see the page above you have successfully deployed your Python web application to Azure!
+If you see the page above you have successfully deployed your Python web application to Azure! Well done!
 
+Everytime you make a change to your web application, those changes will be automatically deployed using GitHub Actions!
+
+## Summary
+In this lab we created a simple GitHub Actions workflow to automate the deployment of Azure infrastructure and a sample Python web app.
+
+The aim was to quickly demonstrate how automated deployments can deliver speed and reliability, allowing developers to focus on product development.
+
+In more advanced scenarios workflows may include more restricted practices such as pull request triggers and release approvals.
