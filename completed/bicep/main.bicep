@@ -30,4 +30,4 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
   }
 }
 
-output hostName string = appService.name
+output hostName string = 'https://${appService.name}.azurewebsites.net'
