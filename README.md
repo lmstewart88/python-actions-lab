@@ -294,4 +294,4 @@ In this lab we created a simple GitHub Actions workflow to automate the deployme
 
 The aim was to quickly demonstrate how automated deployments can deliver speed and reliability, allowing developers to focus on product development.
 
-In more advanced scenarios workflows may include more restricted practices such as pull request triggers and release approvals.
+In more advanced scenarios workflows may include restrictive practices such as pull request triggers and release approvals to protect the integrity of the application.
