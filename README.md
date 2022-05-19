@@ -9,11 +9,16 @@ This workshop demonstrates how to:
 5. [Check that your application has deployed correctly](#check-that-your-application-has-deployed-correctly)
 
 ## Prerequisites
-1. Service principal granting contributor access to an Azure subscription or resource group. This will be provided by your coach.
+
+1. A GitHub account - Sign up here! https://github.com/join
+
+1. Service principal granting contributor access to an Azure subscription or resource group. You will be provided with these details if this lab is part of a coached training session. 
 
 2. A fork of this repository - Use the fork button located in the top right of this page. Ensure the owner is set to your GitHub username, the repository name can be left as is. 
 
 ![alt text](/images/fork_button.jpg "Fork Button")
+
+This lab is designed for beginners and simplicity. All tasks can be carried out online at https://github.com/
 
 ## Use Bicep to create a web app in the Azure
 Bicep is a domain-specific language (DSL) that uses declarative syntax to deploy Azure resources. It provides concise syntax, reliable type safety, and support for code reuse. You can use Bicep instead of JSON to develop your Azure Resource Manager templates (ARM templates). Bicep syntax reduces that complexity and improves the development experience.
