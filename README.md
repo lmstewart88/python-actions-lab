@@ -1,18 +1,18 @@
 # Python Web App and GitHub Actions Lab
-This workshop is a step-by-step beginners guide for exploring how adopting GithHub Actions can automate the deployment of a Python web app to Azure.
+This lab is a step-by-step beginners guide for exploring how adopting GithHub Actions can automate the deployment of a Python web app to Azure.
 
-This workshop demonstrates how to:
-1. [Use Bicep to create a web app in the Azure](#use-bicep-to-create-a-web-app-in-the-azure)
-2. [Deploy App Service using GitHub Actions](#deploy-app-service-using-github-actions)
-3. [Check Workflow and Web App Status](#check-workflow-and-web-app-status)
-4. [Deploy a Python App to Azure](#deploy-python-app-to-azure)
-5. [Check that your application has deployed correctly](#check-that-your-application-has-deployed-correctly)
+This lab demonstrates how to:
+1. [Use Bicep to define the required Azure infrastructure](#use-bicep-to-define-the-required-azure-infrastructure)
+2. [Deploy the infrastructure using GitHub Actions](#deploy-app-service-using-github-actions)
+3. [Check workflow and deployment status](#check-workflow-and-deployment-status)
+4. [Deploy a sample Python app to Azure](#deploy-sample-python-app-to-azure)
+5. [Check the application has deployed correctly](#check-the-application-has-deployed-correctly)
 
 ## Prerequisites
 
-1. A GitHub account - Sign up here! https://github.com/join
+1. A GitHub account - Sign up here: https://github.com/join
 
-1. Service principal granting contributor access to an Azure subscription or resource group. You will be provided with these details if this lab is part of a coached training session. 
+1. Service principal granting contributor access to an Azure subscription or resource group. You will be provided with these details if this lab is part of a coached session. 
 
 2. A fork of this repository - Use the fork button located in the top right of this page. Ensure the owner is set to your GitHub username, the repository name can be left as is. 
 
@@ -20,7 +20,7 @@ This workshop demonstrates how to:
 
 This lab is designed for beginners and simplicity. All tasks can be carried out online at https://github.com/
 
-## Use Bicep to create a web app in the Azure
+## Use Bicep to define the required Azure infrastructure
 Bicep is a domain-specific language (DSL) that uses declarative syntax to deploy Azure resources. It provides concise syntax, reliable type safety, and support for code reuse. You can use Bicep instead of JSON to develop your Azure Resource Manager templates (ARM templates). Bicep syntax reduces that complexity and improves the development experience.
 
 ### Task 1 - Create the Bicep file
@@ -85,7 +85,7 @@ Can you identify where the runtime stack could be changed?
 ### Task 3 - Commit the Bicep file
 When ready commit the new file to main, adding a comment to describe your changes.
 
-## Deploy Azure App Service using GitHub Actions
+## Deploy the infrastructure using GitHub Actions
 In this section we will use GitHub Actions and the bicep code to automate the deployment of the Azure infrastructure we need to run our python application.
 
 GitHub actions use a workflow file which is defined in YAML (.yml) and stored within the /.github/workflows/ path in your repository. This definition contains the various steps and parameters that make up the workflow.
@@ -171,7 +171,7 @@ To finalise your changes complete the following:
 
 Note: Updating either the workflow file or Bicep file triggers the workflow. The workflow starts right after you commit the changes.
 
-## Check workflow and web app status
+## Check workflow and deployment status
 By viewing the status of our workflow we can identify success or failure and debug any issues should they occur.
 
 To do this select the Actions tab in your repository. 
@@ -206,7 +206,7 @@ If all the steps have been completed correctly, you'll notice a default landing 
 
 You have successfully deployed app service using GitHub Actions!
 
-## Deploy Python app to Azure
+## Deploy a sample Python app to Azure
 Now our infrastructure is in place we can proceed to deploy our application code. In this lab we will use a simple python web app for demonstration purposes. However, in a microservices architecture, this could be one of many APIs interconnecting to form an application.
 
 To deploy our Python application we need to add a couple of additional steps to the workflow.
@@ -288,7 +288,7 @@ Question: Where would you enter the path to the application should it change?
 
 When you're ready commit your changes just as before. This will trigger a new run where your Python app will be deployed.
 
-## Check that your application has deployed correctly
+## Check the application has deployed correctly
 
 Just as we did in the 'Check Workflow and Web App Status' section, you should now check the status of your run and review any errors. Feel free to do that now and see if you can also identify the extra jobs we added.
 
