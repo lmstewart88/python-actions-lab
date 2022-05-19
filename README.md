@@ -295,3 +295,13 @@ In this lab we created a simple GitHub Actions workflow to automate the deployme
 The aim was to quickly demonstrate how automated deployments can deliver speed and reliability, allowing developers to focus on product development.
 
 In more advanced scenarios workflows may include increased governance such as pull request triggers and release approvals to protect the integrity of the application.
+
+## Resources
+
+[Quickstart: Deploy Bicep files by using GitHub Actions](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/deploy-github-actions?tabs=CLI)
+
+[Deploy to App Service using GitHub Actions](https://docs.microsoft.com/en-us/azure/app-service/deploy-github-actions?tabs=applevel)
+
+[Quickstart: Deploy a Python (Django or Flask) web app to Azure App Service](https://docs.microsoft.com/en-us/azure/app-service/quickstart-python?tabs=flask%2Cwindows%2Cazure-portal%2Cterminal-bash%2Cvscode-deploy%2Cdeploy-instructions-azportal%2Cdeploy-instructions-zip-azcli)
+
+[Deploying Python to Azure App Service](https://docs.github.com/en/actions/deployment/deploying-to-your-cloud-provider/deploying-to-azure/deploying-python-to-azure-app-service)
