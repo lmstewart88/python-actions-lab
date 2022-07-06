@@ -80,13 +80,13 @@ The code above declares two resources:
 1. An App Service plan to define a set of compute resources for a web app to run. This is identified by the 'resource appServicePlan' block.
 2. An App Service which is a HTTP-based service for hosting web applications, REST APIs, and mobile back ends. This is where code will be deployed and can be identified by the 'resource appService' block.
 
-You'll notice that parameters are used to define some properties, some of which are generated from the resource group values. It's generally a good idea to generate unique names for resources too avoid conflict with other deployments. Locate the line shown below and replace YOURNAME to generate a unique string based on your name.
+You'll notice that parameters are used to define some properties, some of which are generated from resource group values. It's generally a good idea to generate unique names for resources too avoid conflict with other deployments. Locate the line shown below and replace YOURNAME to generate a unique string based on your name.
 
 ```
 param webAppName string = uniqueString('YOURNAME')
 ```
 
-Question: Can you identify where the runtime stack could be changed?
+Question: During that change, did you also stumble across where the runtime stack could be changed?
 
 ### Task 3 - Commit the Bicep file
 When ready, commit the new file to main, adding a comment to describe your changes.
