@@ -24,7 +24,7 @@ This lab is designed for beginners and simplicity. All tasks can be carried out 
 Bicep is a domain-specific language (DSL) that uses declarative syntax to deploy Azure resources. It provides concise syntax, reliable type safety, and support for code reuse. You can use Bicep instead of JSON to develop your Azure Resource Manager templates (ARM templates). Bicep syntax reduces that complexity and improves the development experience.
 
 ### Task 1 - Create the Bicep file
-First we need to create the bicep file that will define our infrastructure.
+First task is to create a bicep file to contain our code.
 
 Above the list of files on this page, use the Add file drop-down and click Create new file.
 
@@ -37,10 +37,10 @@ In the file name field, type the name and extension for the file, in this case '
 Leave the page open ready for the next task.
 
 ### Task 2 - Define the infrastructure using Bicep
-Copy the following bicep code into the body of the 'main.bicep' file.
+Next you need to declare the required infrastructure. Copy and paste the code below into the body of the 'main.bicep' file you just created.
 
 ```
-param webAppName string = uniqueString(utcNow()) // Generate unique String for web app name
+param webAppName string = uniqueString('YOURNAME') // Generate unique String for web app name
 param sku string = 'S1' // The SKU of App Service Plan
 param linuxFxVersion string = 'PYTHON|3.9' // The runtime stack of web app
 param location string = resourceGroup().location // Location for all resources
@@ -80,12 +80,16 @@ The code above declares two resources:
 1. An App Service plan to define a set of compute resources for a web app to run. This is identified by the 'resource appServicePlan' block.
 2. An App Service which is a HTTP-based service for hosting web applications, REST APIs, and mobile back ends. This is where code will be deployed and can be identified by the 'resource appService' block.
 
-You'll notice that parameters are used to define some properties, some of which are generated from the resource group values.
+You'll notice that parameters are used to define some properties, some of which are generated from the resource group values. It's generally a good idea to generate unique names for resources too avoid conflict with other deployments. Locate the line shown below and replace YOURNAME to generate a unique string based on your name.
+
+```
+param webAppName string = uniqueString('YOURNAME')
+```
 
 Question: Can you identify where the runtime stack could be changed?
 
 ### Task 3 - Commit the Bicep file
-When ready commit the new file to main, adding a comment to describe your changes.
+When ready, commit the new file to main, adding a comment to describe your changes.
 
 ## Deploy the infrastructure using GitHub Actions
 In this section we will use GitHub Actions to automate the deployment of the Azure infrastructure defined in the previous section.
