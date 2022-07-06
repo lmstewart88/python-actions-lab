@@ -1,4 +1,4 @@
-param webAppName string = uniqueString(utcNow()) // Generate unique String for web app name.
+param webAppName string = uniqueString('benbriggs') // Generate unique String for web app name.
 param sku string = 'S1' // The SKU of App Service Plan
 param linuxFxVersion string = 'PYTHON|3.9' // The runtime stack of web app
 param location string = resourceGroup().location // Location for all resources
