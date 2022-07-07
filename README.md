@@ -127,23 +127,29 @@ To create a workflow, take the following steps:
 3. Replace the content of the yml file with the following code:
 
 ```
-on: [push]
-name: Azure ARM
+name: Python application
+
+on:
+  [push]
+
+env:
+  DEPLOYMENT_NAME: ${{ github.run_id }}-${{ github.run_number }}
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
 
       # Checkout code
-    - uses: actions/checkout@main
-
+    - uses: actions/checkout@v2
+    
       # Log into Azure
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       # Deploy Bicep file
-    - name: deploy
+    - name: Deploy Bicep
       uses: azure/arm-deploy@v1
       id: deploy
       with:
@@ -151,6 +157,7 @@ jobs:
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./bicep/main.bicep
         failOnStdErr: false
+        deploymentName: ${{ env.DEPLOYMENT_NAME }}
     - run: echo ${{ steps.deploy.outputs.hostName }}
 ```
 
@@ -197,7 +204,7 @@ If all the steps have been completed correctly, you'll notice a default landing 
 
 ![alt text](/images/default_landing_page.png "Jobs")
 
-You have successfully deployed app service using GitHub Actions!
+You have successfully deployed app service using GitHub Actions! but there's more to do... 
 
 ## Deploy a sample Python app to Azure
 Now our infrastructure is in place we can proceed to deploy our application code. In this lab we will use a simple python web app for demonstration purposes. However, in a microservices architecture, this could be one of many APIs interconnecting to form an application.
@@ -232,6 +239,7 @@ on:
 
 env:
   AZURE_WEBAPP_PACKAGE_PATH: './app' # set this to the path to your web app project, defaults to the repository root
+  DEPLOYMENT_NAME: ${{ github.run_id }}-${{ github.run_number }}
 
 jobs:
   build-and-deploy:
@@ -265,6 +273,7 @@ jobs:
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./bicep/main.bicep
         failOnStdErr: false
+        deploymentName: ${{ env.DEPLOYMENT_NAME }}
     - run: echo ${{ steps.deploy.outputs.hostName }}
 
       # Deploy Web App
@@ -277,6 +286,7 @@ jobs:
       run: |
         az logout
 ```
+
 Question: Where would you enter the path to the application should it change?
 
 When you're ready commit your changes just as before. This will trigger a new run where your Python app will be deployed.
@@ -294,11 +304,11 @@ If you see the page above you have successfully deployed your Python web applica
 Everytime you make a change to your web application, those changes will be automatically deployed using GitHub Actions!
 
 ## Summary
-In this lab we created a simple GitHub Actions workflow to automate the deployment of Azure infrastructure and a sample Python web app.
+In this lab we created a simple GitHub Actions workflow to automate the deployment of Azure App Service and a sample Python web app.
 
 The aim was to quickly demonstrate how automated deployments can deliver speed and reliability, allowing developers to focus on product development.
 
-In more advanced scenarios workflows may include increased governance such as pull request triggers and release approvals to protect the integrity of the application.
+In more advanced scenarios workflows may include increased governance such as pull request triggers, automated testing and release approvals to protect the integrity of the application.
 
 ## Resources
 
