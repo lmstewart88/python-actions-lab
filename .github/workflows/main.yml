@@ -5,7 +5,7 @@ on:
 
 env:
   AZURE_WEBAPP_PACKAGE_PATH: './app' # set this to the path to your web app project, defaults to the repository root
-  DEPLOYMENT_NAME: ${GITHUB_RUN_ID}
+  DEPLOYMENT_NAME: '1'
 
 jobs:
   build-and-deploy:
