@@ -1,0 +1,32 @@
+name: Python application
+
+on: 
+  [push]  
+
+env:
+  DEPLOYMENT_NAME: ${{ github.run_id }}-${{ github.run_number }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Checkout code
+    - uses: actions/checkout@v2
+    
+      # Log into Azure
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Deploy Bicep file
+    - name: Deploy Bicep
+      uses: azure/arm-deploy@v1
+      id: deploy
+      with:
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        template: ./bicep/main.bicep
+        failOnStdErr: false
+        deploymentName: ${{ env.DEPLOYMENT_NAME }}
+    - run: echo ${{ steps.deploy.outputs.hostName }}
