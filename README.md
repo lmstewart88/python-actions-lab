@@ -3,7 +3,7 @@ This lab is a step-by-step beginners guide for exploring how adopting GithHub Ac
 
 This lab demonstrates how to:
 1. [Use Bicep to define the required Azure infrastructure](#use-bicep-to-define-the-required-azure-infrastructure)
-2. [Deploy the infrastructure using GitHub Actions](#deploy-app-service-using-github-actions)
+2. [Deploy the infrastructure using GitHub Actions](#deploy-the-infrastructure-using-github-actions)
 3. [Check workflow and deployment status](#check-workflow-and-deployment-status)
 4. [Deploy a sample Python app to Azure](#deploy-sample-python-app-to-azure)
 5. [Check the application has deployed correctly](#check-the-application-has-deployed-correctly)
